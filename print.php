@@ -67,14 +67,15 @@
         }
 
         if (move_uploaded_file($_FILES['file']['tmp_name'], $foldername.$_FILES['file']['name'])) {
-            $path = $foldername.$_FILES['file']['name'];
-            echo "Printanje vjerojatno u tijeku";
+            $path = $foldername."'".$_FILES['file']['name']."'";
         } else {
-            echo "File not uploaded";
+            echo "Dokument nije podignut.";
         }
         if($path && $nacinPrinta){
-            exec("lp $path -n $brKopija -o sides=$nacinPrinta $ostaleOpcije");
+            echo "Printanje vjerojatno u tijeku";
+            if (exec("lp $path -n $brKopija -o sides=$nacinPrinta $ostaleOpcije")){
             unlink($path);
+            }
         }
     }
 ?>
