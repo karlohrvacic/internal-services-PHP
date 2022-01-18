@@ -17,7 +17,8 @@
 				</div>
 				<label for="formFileLg" class="form-label">Odaberi folder za upload:</label>
 			  <input class="form-control form-control-lg" id="formFile files" type="file" name="files[]" i multiple directory="" webkitdirectory="" moxdirectory="">
-			  <input type="Submit" value="Upload" name="upload" class="btn btn-primary m-2" />
+			  <input class="form-control" type="text" name="PIN">
+                <input type="Submit" value="Upload" name="upload" class="btn btn-primary m-2" />
 			</form>
 			<a href="index.html"><button class="btn btn-outline-secondary">povratak na izbornik</button></a>
 		</div>
@@ -25,18 +26,24 @@
 </html>
 <?php
 	if(isset($_POST['upload'])){
-		if($_POST['foldername'] != ""){
-			$foldername=$_POST['foldername'];
-		    $foldername = "files/" . $foldername;
-			if(!is_dir($foldername)) mkdir($foldername);
-			foreach($_FILES['files']['name'] as $i => $name){
-				if(strlen($_FILES['files']['name'][$i]) > 1){
-					move_uploaded_file($_FILES['files']['tmp_name'][$i],$foldername."/".$name);
-				}
-			}
-			echo "Folder is successfully uploaded";
-		}
-		else
-			echo "Upload folder name is empty";
-		}
+        if ($_POST['PIN'] == '4543'){
+            if($_POST['foldername'] != ""){
+                $foldername=$_POST['foldername'];
+                $foldername = "files/" . $foldername;
+                if(!is_dir($foldername)) mkdir($foldername);
+                foreach($_FILES['files']['name'] as $i => $name){
+                    if(strlen($_FILES['files']['name'][$i]) > 1){
+                        move_uploaded_file($_FILES['files']['tmp_name'][$i],$foldername."/".$name);
+                    }
+                }
+                echo "Folder is successfully uploaded";
+            }
+            else
+                echo "Upload folder name is empty";
+        }
+        else {
+            echo "Wrong password";
+        }
+    }
+
 ?>

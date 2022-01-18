@@ -66,15 +66,15 @@
             $ostaleOpcije .= "-P $dokumentOd-$dokumentDo";
         }
 
-        if (move_uploaded_file($_FILES['file']['tmp_name'], $foldername.$_FILES['file']['name'])) {
-            $path = $foldername."'".$_FILES['file']['name']."'";
+        if (move_uploaded_file($_FILES['file']['tmp_name'], $foldername.str_replace(' ', '_', $_FILES['file']['name']))) {
+            $path = $foldername.str_replace(' ', '_', $_FILES['file']['name']);
         } else {
             echo "Dokument nije podignut.";
         }
         if($path && $nacinPrinta){
-            echo "Printanje vjerojatno u tijeku";
+            echo "Printanje vjerojatno u tijeku ";
             if (exec("lp $path -n $brKopija -o sides=$nacinPrinta $ostaleOpcije")){
-            unlink($path);
+                unlink($path);
             }
         }
     }
